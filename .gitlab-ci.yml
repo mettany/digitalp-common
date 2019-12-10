@@ -1,8 +1,17 @@
 stages:
   - build
+  - deploy
 
-build backend:
+build:
   stage: build
   image: openjdk:8-jdk
   script:
     - ./mvnw clean install
+
+deploy mvn :
+  stage: deploy
+  image: openjdk:8-jdk
+  script:
+    - ./mvnw deploy --settings build/settings.xml -DskipTests
+  only:
+    - tags
