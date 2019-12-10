@@ -1,0 +1,8 @@
+stages:
+  - build
+
+build backend:
+  stage: build
+  image: openjdk:8-jdk
+  script:
+    - ./mvnw clean install
