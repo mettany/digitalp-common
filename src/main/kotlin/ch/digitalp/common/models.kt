@@ -3,6 +3,7 @@ package ch.digitalp.common
 
 import com.google.gson.*
 import io.vertx.core.json.JsonObject
+import io.vertx.ext.web.RoutingContext
 import java.lang.reflect.Type
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -52,10 +53,10 @@ inline fun <reified T> JsonObject.convertCC(): T {
  * to string json and assert it's not an empty json but containing valid field for
  * specified type
  */
-inline fun <reified T> JsonObject.assertValidField(): JsonObject {
-  val ob = toJson(getGsonCamelCase().fromJson(this.encode(), T::class.java)!!)
-  if (ob.encode() == "{}") throw InvalidFieldException("Object not containing any valid field for passed type")
-  return ob
+inline fun <reified T> JsonObject.assertValidField(rc: RoutingContext): JsonObject {
+    val ob = toJson(getGsonCamelCase().fromJson(this.encode(), T::class.java)!!)
+    if (ob.encode() == "{}") rc.fail(BadRequestRestException("Unrecognized field"))
+    return ob
 }
 
 data class Error(val message: String?) : Models()
