@@ -1,6 +1,5 @@
 package ch.digitalp.common
 
-
 import com.google.gson.*
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.RoutingContext
@@ -12,6 +11,10 @@ import java.time.format.DateTimeFormatter
 abstract class Models {
   fun toStringJson(): String {
     return toStringJson(this)
+  }
+
+  fun toJson(): JsonObject {
+    return toJson(this)
   }
 }
 
@@ -54,9 +57,9 @@ inline fun <reified T> JsonObject.convertCC(): T {
  * specified type
  */
 inline fun <reified T> JsonObject.assertValidField(rc: RoutingContext): JsonObject {
-    val ob = toJson(getGsonCamelCase().fromJson(this.encode(), T::class.java)!!)
-    if (ob.encode() == "{}") rc.fail(BadRequestRestException("Unrecognized field"))
-    return ob
+  val ob = toJson(getGsonCamelCase().fromJson(this.encode(), T::class.java)!!)
+  if (ob.encode() == "{}") rc.fail(BadRequestRestException("Unrecognized field"))
+  return ob
 }
 
 data class Error(val message: String?) : Models()
@@ -82,11 +85,11 @@ class LocalDateTimeConverter : JsonSerializer<LocalDateTime>, JsonDeserializer<L
 }
 
 fun <T : Any> T?.notNull(f: (it: T) -> Unit): T? {
-    if (this != null) f(this)
-    return this
+  if (this != null) f(this)
+  return this
 }
 
 fun <T : Any> T?.isNull(f: () -> Unit): T? {
-    if (this == null) f()
-    return this
+  if (this == null) f()
+  return this
 }
