@@ -6,7 +6,7 @@
 
   <groupId>ch.digitalp</groupId>
   <artifactId>common</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,6 +18,8 @@
     <junit-jupiter.version>5.4.0</junit-jupiter.version>
     <mockito-junit-jupiter.version>3.1.0</mockito-junit-jupiter.version>
 
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <dependencyManagement>
