@@ -56,7 +56,7 @@ val checkIntrospectResult: (JsonObject, RoutingContext, String) -> Unit = { intr
     rc.data()["sub"] = introspect.getString("sub")
     val containScope = introspect.getString("scope").split(" ").contains(scope)
     val admin = introspect.getString("scope").split(" ").contains("app:admin")
-    val emptyScope = scope === ""
+    val emptyScope = scope == ""
     if (containScope || admin || emptyScope) rc.next() else returnForbidden(rc)
   }
 }
